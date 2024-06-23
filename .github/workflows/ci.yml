@@ -14,8 +14,8 @@ jobs:
         with:
           fetch-depth: 0
         # setup pnpm
-        - uses: pnpm/actions-setup@v2
-          with:
-            version: 8
-        - run: pnpm install --frozen-lockfile
-        - run: pnpm nx build web
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - run: pnpm install
+      - run: pnpm nx build web
