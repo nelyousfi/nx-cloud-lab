@@ -1,3 +1,4 @@
+import { echo } from '@nelyousfi/echo';
 import styles from './page.module.css';
 
 export default function Index() {
@@ -14,6 +15,7 @@ export default function Index() {
             <h1>
               <span> Hello there, </span>
               Welcome web 👋
+              <span>{echo()}</span>
             </h1>
           </div>
 
