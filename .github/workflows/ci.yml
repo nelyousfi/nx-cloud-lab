@@ -32,4 +32,8 @@ jobs:
           path: |
             node_modules
           key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
-      - run: pnpm nx build web
+      - uses: nrwl/nx-set-shas@v3
+      # This line is needed for nx affected to work when CI is running on a PR
+      - run: git branch --track main origin/main
+        if: ${{ github.event_name == 'pull_request' }}
+      - run: pnpm nx affected -t build
