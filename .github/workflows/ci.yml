@@ -14,8 +14,20 @@ jobs:
         with:
           fetch-depth: 0
         # setup pnpm
-        - uses: pnpm/actions-setup@v2
-          with:
-            version: 8
-        - run: pnpm install --frozen-lockfile
-        - run: pnpm nx build web
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            node_modules
+          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            node_modules
+          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm nx build web
