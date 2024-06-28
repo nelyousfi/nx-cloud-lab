@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    branches:
+      # Change this if your primary branch is not main
+      - main
+  pull_request:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9.4.0
+      - run: pnpm nx graph --file=_site/index.html
+      - uses: actions/upload-pages-artifact
+        with:
+          name: 'Nx Graph pages'
+          path: '_site'
